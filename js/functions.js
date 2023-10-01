@@ -19,3 +19,15 @@ const isPalindrome = (string) => {
   }
   return false;
 };
+
+const extractTheNumbers = (string) => {
+  let numbers ='';
+  for (let i = 0; i < string.length; i++) {
+    if (parseInt(string[i]) || string[i] == 0) {
+      numbers = numbers + string[i];
+    }
+  }
+  numbers = numbers.replaceAll(' ','');
+  numbers = parseInt(numbers);
+  return numbers;
+}
