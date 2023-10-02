@@ -1,33 +1,29 @@
-const checkStringLength = (string, maxLength) => {
-  if (string.length <= maxLength){
-    return true;
-  }
-  return false;
-};
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
+
+checkStringLength('проверяемая строка', 20);
 
 const isPalindrome = (string) => {
-  string = string.toLowerCase();
-  string = string.replaceAll(' ','');
-  let newString ='';
-  let i = -1;
-  while (newString.length < string.length) {
-    newString = newString + string.at(i);
-    i -= 1;
+  string = string.replaceAll(' ','').toLowerCase();
+  let reverse = '';
+  for (let i = string.length-1; i >= 0; i--) {
+    reverse += string[i];
   }
-  if (newString === string){
-    return true;
-  }
-  return false;
+
+  return reverse === string;
 };
 
-const extractTheNumbers = (string) => {
+isPalindrome('Лёша на полке клопа нашёл');
+
+const extractNumbers = (input) => {
+  const inputString = input.toString();
   let numbers ='';
-  for (let i = 0; i < string.length; i++) {
-    if (parseInt(string[i]) || string[i] == 0) {
-      numbers = numbers + string[i];
+
+  for (const i of inputString) {
+    if (i >= '0' && i <= '9') {
+      numbers += i;
     }
   }
-  numbers = numbers.replaceAll(' ','');
-  numbers = parseInt(numbers);
-  return numbers;
-}
+
+  return numbers !== '' ? +numbers : NaN;
+};
+extractNumbers('агент 007');
