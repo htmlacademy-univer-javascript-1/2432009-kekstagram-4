@@ -1,0 +1,25 @@
+/* <template id="picture">
+    <a href="#" class="picture">
+      <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
+      <p class="picture__info">
+        <span class="picture__comments"></span>
+        <span class="picture__likes"></span>
+      </p>
+    </a>
+  </template> */
+import {getPhotoDescription} from './data.js';
+
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesList = document.querySelector('.pictures');
+const picturesListFragment = document.createDocumentFragment();
+
+const renderPhotoPreview = getPhotoDescription();
+renderPhotoPreview.forEach(({url, description, likes, comments}) => {
+  const pictureElement = pictureTemplate.cloneNode(true);
+  pictureElement.querySelector('.picture__img').src = url;
+  pictureElement.querySelector('.picture__img').alt = description;
+  pictureElement.querySelector('.picture__likes').textContent = likes;
+  pictureElement.querySelector('picture__comments').textContent = comments.length;
+  picturesList.appendChild(pictureElement);
+});
+picturesList.appendChild(picturesListFragment);
