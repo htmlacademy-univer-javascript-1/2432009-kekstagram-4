@@ -1,2 +1,2 @@
-import { getPhotoDescription } from './data';
-getPhotoDescription();
+import { drawMiniatures } from './small-pictures.js';
+drawMiniatures();

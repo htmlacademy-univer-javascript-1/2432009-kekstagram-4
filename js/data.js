@@ -1,4 +1,4 @@
-import { getUniqueRandomId, getRandomInteger } from './utils';
+import { getUniqueRandomId, getRandomInteger } from './utils.js';
 
 export const NAMES = [
   'Irishka220',
@@ -52,26 +52,34 @@ const getUrlIndex = () => getUniqueRandomId(UrlNumber.MIN, UrlNumber.MAX, usedUr
 
 const getLikes = () => getRandomInteger(LikesCount.MIN, LikesCount.MAX);
 
-const usedAvatarIndex = [];
-const getAvatarIndex = () => getUniqueRandomId(AvatarNumber.MIN, AvatarNumber.MAX, usedAvatarIndex);
+const getComment = () => {
+  const comments = [];
+  const numComments = getRandomInteger(0, 30);
+  for (let i = 0; i <= numComments - 1; i++) {
+    const comment = {
+      id: 1,
+      avatar: `img/avatar-${getRandomInteger(AvatarNumber.MIN, AvatarNumber.MAX)}.svg`,
+      message: MESSAGES[getRandomInteger(0, MESSAGES.length-1)],
+      name:NAMES[getRandomInteger(0, NAMES.length-1)]
+    };
+    comments.push(comment);
+  }
+  return comments;
+};
 
-
-const getComments = () => ({
-  id: getId(),
-  avatar: `img/avatar-${ getAvatarIndex() }.svg`,
-  message: MESSAGES[getRandomInteger(0, MESSAGES.length-1)],
-  name:NAMES[getRandomInteger(0, NAMES.length-1)]
-});
-
-const generatePhotoDescription = () => ({
-  id: getId(),
-  url: `photos/${ getUrlIndex() }.jpg`,
-  description: 'Посмотрите, какую фотографию я сделал!',
-  likes: getLikes(),
-  comments: Array.from({length:getRandomInteger(CommentsCount.MIN, CommentsCount.MAX)}, getComments)
-});
-
-export const getPhotoDescription = () => Array.from({length:MAX_PHOTOS_COUNT}, generatePhotoDescription);
-getPhotoDescription();
+export const generatePhotoDescription = () => {
+  const photos = [];
+  for (let i = 1; i <= MAX_PHOTOS_COUNT; i++){
+    const photo = {
+      id: getId(),
+      url: `photos/${ getUrlIndex() }.jpg`,
+      description: 'Посмотрите, какую фотографию я сделал!',
+      likes: getLikes(),
+      comments: getComment()
+    };
+    photos.push(photo);
+  }
+  return photos;
+};
 
 
