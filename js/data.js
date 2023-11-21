@@ -46,16 +46,7 @@ export const AvatarNumber = {
 
 const usedId = [];
 const getId = () => getUniqueRandomId(IdNumber.MIN,IdNumber.MAX,usedId);
-
-const usedUrlIndex = [];
-const getUrlIndex = () => getUniqueRandomId(UrlNumber.MIN, UrlNumber.MAX, usedUrlIndex);
-
 const getLikes = () => getRandomInteger(LikesCount.MIN, LikesCount.MAX);
-
-const usedAvatarIndex = [];
-const getAvatarIndex = () => getUniqueRandomId(AvatarNumber.MIN, AvatarNumber.MAX, usedAvatarIndex);
-
-
 const getComment = () => {
   const comments = [];
   const numComments = getRandomInteger(0, 30);
