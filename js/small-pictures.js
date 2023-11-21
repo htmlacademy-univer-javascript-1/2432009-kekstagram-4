@@ -1,10 +1,10 @@
-import {generatePhotoDescription} from './data.js';
+import {getPhotoDescription} from './data.js';
 
 export const drawMiniatures = () => {
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesList = document.querySelector('.pictures');
   const picturesListFragment = document.createDocumentFragment();
-  const renderPhotoPreview = generatePhotoDescription();
+  const renderPhotoPreview = getPhotoDescription();
 
   renderPhotoPreview.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);

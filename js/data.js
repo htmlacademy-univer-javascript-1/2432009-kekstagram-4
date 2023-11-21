@@ -52,34 +52,36 @@ const getUrlIndex = () => getUniqueRandomId(UrlNumber.MIN, UrlNumber.MAX, usedUr
 
 const getLikes = () => getRandomInteger(LikesCount.MIN, LikesCount.MAX);
 
+const usedAvatarIndex = [];
+const getAvatarIndex = () => getUniqueRandomId(AvatarNumber.MIN, AvatarNumber.MAX, usedAvatarIndex);
+
+
 const getComment = () => {
   const comments = [];
   const numComments = getRandomInteger(0, 30);
   for (let i = 0; i <= numComments - 1; i++) {
     const comment = {
-      id: 1,
+      id: i,
       avatar: `img/avatar-${getRandomInteger(AvatarNumber.MIN, AvatarNumber.MAX)}.svg`,
       message: MESSAGES[getRandomInteger(0, MESSAGES.length-1)],
       name:NAMES[getRandomInteger(0, NAMES.length-1)]
     };
     comments.push(comment);
   }
+
   return comments;
 };
 
-export const generatePhotoDescription = () => {
-  const photos = [];
-  for (let i = 1; i <= MAX_PHOTOS_COUNT; i++){
-    const photo = {
-      id: getId(),
-      url: `photos/${ getUrlIndex() }.jpg`,
-      description: 'Посмотрите, какую фотографию я сделал!',
-      likes: getLikes(),
-      comments: getComment()
-    };
-    photos.push(photo);
-  }
-  return photos;
+const generatePhotoDescription = () => {
+  const id = getId();
+  const photo = {
+    id: id,
+    url: `photos/${id}.jpg`,
+    description: 'Посмотрите, какую фотографию я сделал!',
+    likes: getLikes(),
+    comments: getComment()
+  };
+
+  return photo;
 };
-
-
+export const getPhotoDescription = () => Array.from({length:MAX_PHOTOS_COUNT}, generatePhotoDescription);
