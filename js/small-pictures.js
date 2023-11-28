@@ -1,3 +1,5 @@
+import { openViewPopup } from './view-popup.js';
+
 export const drawMiniatures = (renderedPhotos) => {
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesList = document.querySelector('.pictures');
@@ -9,6 +11,9 @@ export const drawMiniatures = (renderedPhotos) => {
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    pictureElement.addEventListener('click', (evt) => {
+      openViewPopup(evt, url, description, likes, comments);
+    });
 
     picturesListFragment.append(pictureElement);
   });
