@@ -1,6 +1,19 @@
 const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 
+const onCloseBtnClick = (evt) => {
+  if (evt.key === 'Escape') {
+    closeViewPopup(evt);
+  }
+};
+
+const closeViewPopup = (evt) =>{
+  document.body.classList.remove('modal-open');
+  document.querySelector('.big-picture').classList.add('hidden');
+  evt.target.removeEventListener('click', closeViewPopup);
+  document.removeEventListener('keydown', onCloseBtnClick);
+};
+
 export const openViewPopup = (evt, url, description, likes, comments) =>{
   const openedPicture = document.querySelector('.big-picture');
   commentsLoader.classList.remove('hidden');
@@ -12,15 +25,15 @@ export const openViewPopup = (evt, url, description, likes, comments) =>{
 
   const commentsFragment = document.createDocumentFragment();
 
-  for (let i = 0; i < comments.length; i++){
+  comments.forEach((element) => {
     document.querySelector('.active__comments-count').textContent = comments.length;
     commentsLoader.classList.add('hidden');
     const comment = commentTemplate.cloneNode(true);
-    comment.querySelector('.social__picture').src = comments[i].avatar;
-    comment.querySelector('.social__picture').alt = comments[i].name;
-    comment.querySelector('.social__text').textContent = comments[i].message;
+    comment.querySelector('.social__picture').src = element.avatar;
+    comment.querySelector('.social__picture').alt = element.name;
+    comment.querySelector('.social__text').textContent = element.message;
     commentsFragment.append(comment);
-  }
+  });
 
   const commentsContainer = document.querySelector('.social__comments');
   commentsContainer.innerHTML = '';
@@ -32,15 +45,3 @@ export const openViewPopup = (evt, url, description, likes, comments) =>{
   document.addEventListener('keydown', onCloseBtnClick);
 };
 
-const closeViewPopup = (evt) =>{
-  document.body.classList.remove('modal-open');
-  document.querySelector('.big-picture').classList.add('hidden');
-  evt.target.removeEventListener('click', closeViewPopup);
-  document.removeEventListener('keydown', onCloseBtnClick);
-};
-
-const onCloseBtnClick = (evt) => {
-  if (evt.key === 'Escape') {
-    closeViewPopup(evt);
-  }
-};
