@@ -3,6 +3,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 
 const onCloseBtnClick = (evt) => {
   if (evt.key === 'Escape') {
+    // eslint-disable-next-line no-use-before-define
     closeViewPopup(evt);
   }
 };
