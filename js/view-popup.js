@@ -7,21 +7,21 @@ const onCloseBtnClick = (evt) => {
   }
 };
 
-const closeViewPopup = (evt) =>{
+const closeViewPopup = () =>{
   document.body.classList.remove('modal-open');
   document.querySelector('.big-picture').classList.add('hidden');
-  evt.target.removeEventListener('click', closeViewPopup);
+  document.removeEventListener('click', closeViewPopup);
   document.removeEventListener('keydown', onCloseBtnClick);
 };
 
 export const openViewPopup = (evt, url, description, likes, comments) =>{
-  const openedPicture = document.querySelector('.big-picture');
+  const bigPicture = document.querySelector('.big-picture');
   commentsLoader.classList.remove('hidden');
-  openedPicture.classList.remove('hidden');
-  openedPicture.querySelector('.big-picture__img img').src = url;
-  openedPicture.querySelector('.likes-count').textContent = likes;
-  openedPicture.querySelector('.comments-count').textContent = comments.length;
-  openedPicture.querySelector('.social__caption').textContent = description;
+  bigPicture.classList.remove('hidden');
+  bigPicture.querySelector('.big-picture__img img').src = url;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.comments-count').textContent = comments.length;
+  bigPicture.querySelector('.social__caption').textContent = description;
 
   const commentsFragment = document.createDocumentFragment();
 
@@ -41,7 +41,6 @@ export const openViewPopup = (evt, url, description, likes, comments) =>{
 
   document.body.classList.add('modal-open');
 
-  openedPicture.querySelector('.big-picture__cancel').addEventListener('click', closeViewPopup);
+  bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeViewPopup);
   document.addEventListener('keydown', onCloseBtnClick);
 };
-
