@@ -11,8 +11,8 @@ export const drawMiniatures = (renderedPhotos) => {
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    pictureElement.addEventListener('click', (evt) => {
-      openViewPopup(evt, url, description, likes, comments);
+    pictureElement.addEventListener('click', () => {
+      openViewPopup(url, description, likes, comments);
     });
 
     picturesListFragment.append(pictureElement);

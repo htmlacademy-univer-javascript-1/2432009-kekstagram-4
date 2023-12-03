@@ -2,20 +2,23 @@ const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 const closeViewPopupBtn = document.querySelector('.big-picture__cancel');
 
-const onCloseBtnKeydown = (evt) => {
+const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    closeViewPopup(evt);
+    evt.preventDefault();
+    closeViewPopup();
   }
 };
 
-function closeViewPopup () {
+const onCloseBtnClick = () => closeViewPopup();
+
+function closeViewPopup() {
   document.body.classList.remove('modal-open');
   document.querySelector('.big-picture').classList.add('hidden');
-  document.removeEventListener('click', closeViewPopup);
-  document.removeEventListener('keydown', onCloseBtnKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  closeViewPopupBtn.removeEventListener('click', onCloseBtnClick);
 }
 
-export const openViewPopup = (evt, url, description, likes, comments) =>{
+export const openViewPopup = (url, description, likes, comments) =>{
   const bigPicture = document.querySelector('.big-picture');
   commentsLoader.classList.remove('hidden');
   bigPicture.classList.remove('hidden');
@@ -42,6 +45,5 @@ export const openViewPopup = (evt, url, description, likes, comments) =>{
 
   document.body.classList.add('modal-open');
 
-  closeViewPopupBtn.addEventListener('click', closeViewPopup);
-  document.addEventListener('keydown', onCloseBtnKeydown);
+  closeViewPopupBtn.addEventListener('click', onCloseBtnClick);
 };
