@@ -1,19 +1,19 @@
 const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
+const closeViewPopupBtn = document.querySelector('.big-picture__cancel');
 
-const onCloseBtnClick = (evt) => {
+const onCloseBtnKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    // eslint-disable-next-line no-use-before-define
     closeViewPopup(evt);
   }
 };
 
-const closeViewPopup = () =>{
+function closeViewPopup () {
   document.body.classList.remove('modal-open');
   document.querySelector('.big-picture').classList.add('hidden');
   document.removeEventListener('click', closeViewPopup);
-  document.removeEventListener('keydown', onCloseBtnClick);
-};
+  document.removeEventListener('keydown', onCloseBtnKeydown);
+}
 
 export const openViewPopup = (evt, url, description, likes, comments) =>{
   const bigPicture = document.querySelector('.big-picture');
@@ -42,6 +42,6 @@ export const openViewPopup = (evt, url, description, likes, comments) =>{
 
   document.body.classList.add('modal-open');
 
-  bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeViewPopup);
-  document.addEventListener('keydown', onCloseBtnClick);
+  closeViewPopupBtn.addEventListener('click', closeViewPopup);
+  document.addEventListener('keydown', onCloseBtnKeydown);
 };
