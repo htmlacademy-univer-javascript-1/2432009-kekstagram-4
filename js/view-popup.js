@@ -1,6 +1,8 @@
 const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 const closeViewPopupBtn = document.querySelector('.big-picture__cancel');
+const activeComments = document.querySelector('.active__comments-count');
+const COMMENT_STEP = 5;
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -9,24 +11,23 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const showNextComments = () => {
+const onLoadBtnClick = () => {
   let currentComment = document.querySelector('.social__comment.hidden');
   let i = 0;
-
-  for (; i < 5; i++) {
-    if (currentComment === null) {
+  for (let j = i; i < j + COMMENT_STEP; i++) {
+    if (!currentComment) {
       commentsLoader.classList.add('hidden');
       break;
     }
     currentComment.classList.remove('hidden');
     currentComment = currentComment.nextElementSibling;
-    if (currentComment === null) {
+    if (!currentComment) {
       commentsLoader.classList.add('hidden');
-      document.querySelector('.active__comments-count').textContent = +document.querySelector('.active__comments-count').textContent + 1;
+      activeComments.textContent = +activeComments.textContent + 1;
       break;
     }
   }
-  document.querySelector('.active__comments-count').textContent = +document.querySelector('.active__comments-count').textContent + i;
+  activeComments.textContent = +activeComments.textContent + i;
 };
 
 
@@ -37,7 +38,7 @@ function closeViewPopup() {
   document.querySelector('.big-picture').classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   closeViewPopupBtn.removeEventListener('click', onCloseBtnClick);
-  document.querySelector('.social__comments-loader').removeEventListener('click', showNextComments);
+  document.querySelector('.social__comments-loader').removeEventListener('click', onLoadBtnClick);
 }
 
 export const openViewPopup = (url, description, likes, comments) =>{
@@ -47,7 +48,7 @@ export const openViewPopup = (url, description, likes, comments) =>{
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
-  document.querySelector('.active__comments-count').textContent = '0';
+  activeComments.textContent = '0';
   const commentsFragment = document.createDocumentFragment();
 
   comments.forEach((element) => {
@@ -64,11 +65,11 @@ export const openViewPopup = (url, description, likes, comments) =>{
   commentsContainer.innerHTML = '';
   commentsContainer.append(commentsFragment);
   commentsLoader.classList.remove('hidden');
-  showNextComments();
+  onLoadBtnClick();
 
   document.body.classList.add('modal-open');
 
   closeViewPopupBtn.addEventListener('click', onCloseBtnClick);
 
-  bigPicture.querySelector('.social__comments-loader').addEventListener('click', showNextComments);
+  bigPicture.querySelector('.social__comments-loader').addEventListener('click', onLoadBtnClick);
 };
