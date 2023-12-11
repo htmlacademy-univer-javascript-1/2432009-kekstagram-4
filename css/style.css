@@ -393,6 +393,11 @@ main {
   margin-bottom: 30px;
 }
 
+.form__error {
+  color: red;
+  font-weight: semi-bold;
+  display: block;
+}
 
 /**
  * Кнопки изменения масштаба изобраения
