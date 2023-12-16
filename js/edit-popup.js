@@ -1,14 +1,22 @@
+import { btnBigger, btnSmaller} from './effect-scale-photo.js';
+import {sliderBackground} from './effect-slider.js';
+
+const SCALE_VALUE = 100;
+const PERCENT = '%';
+const SCALE_MAX = 1;
+
 const bodyElement = document.querySelector('body');
 const overlayElement=bodyElement.querySelector('.img-upload__overlay');
 const inputUploadElement = bodyElement.querySelector('.img-upload__input');
 const closeEditPopupBtn = bodyElement.querySelector('.img-upload__cancel');
 const form = document.querySelector('.img-upload__form');
+const imgPreview = form.querySelector('.img-upload__preview img');
 const uploadElement = document.getElementById('upload-file');
 const inputHashtags = document.querySelector('.text__hashtags');
 const uploadComment = document.querySelector('.text__description');
 const REG_HASHTAGS = /^#[a-zа-яё0-9]{0,19}$/i;
 const acceptedFiles = ['image/jpeg','image/png', 'image/jpg'];
-
+const scaleControl = document.querySelector('.scale__control--value');
 
 const initValidation = () => {
   const pristine = new Pristine(
@@ -101,6 +109,12 @@ function closeEditPopup () {
   window.removeEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.removeEventListener('click', onCloseBtnClick);
   uploadElement.value = '';
+  imgPreview.style.transform = `scale(${SCALE_MAX})`;
+  imgPreview.style.filter = '';
+  imgPreview.className = 'effects__preview--none';
+  imgPreview.dataset.filterName = '';
+  btnBigger.disabled = true;
+  btnSmaller.disabled = false;
 }
 
 const openEditPopup =() => {
@@ -108,6 +122,8 @@ const openEditPopup =() => {
   bodyElement.classList.add('modal-open');
   window.addEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.addEventListener('click', onCloseBtnClick);
+  scaleControl.value = SCALE_VALUE + PERCENT;
+  sliderBackground.classList.add('hidden');
 };
 
 const onInputUploadElementChange = () => {
