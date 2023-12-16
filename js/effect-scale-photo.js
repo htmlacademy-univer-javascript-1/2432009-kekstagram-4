@@ -6,36 +6,62 @@ const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const btnBigger = document.querySelector('.scale__control--bigger');
 const btnSmaller = document.querySelector('.scale__control--smaller');
 
-btnBigger.disabled = true;
+const checkBtnAccess = (numberScaleValue) => {
+  if (numberScaleValue === SCALE_MAX) {
+    btnBigger.disabled = true;
+    btnSmaller.disabled = false;
+  } else if (numberScaleValue === SCALE_MIN) {
+    btnSmaller.disabled = true;
+    btnBigger.disabled = false;
+  } else {
+    btnSmaller.disabled = false;
+    btnBigger.disabled = false;
+  }
+};
 
 const changeScale = (number) => {
   imgUploadPreview.style.transform = `scale(${number/SCALE_MAX})`;
 };
 
-btnBigger.addEventListener('click', () => {
-  let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
-  numberScaleValue += SCALE_STEP;
-  inputScale.value =  `${numberScaleValue}%`;
+const initScaleEffect = () => {
+  btnBigger.addEventListener('click', () => {
+    let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
+    numberScaleValue += SCALE_STEP;
+    inputScale.value =  `${numberScaleValue}%`;
 
-  if (numberScaleValue === SCALE_MAX) {
-    btnBigger.disabled = true;
-  }
-  btnSmaller.disabled = false;
+    checkBtnAccess(numberScaleValue);
+    changeScale(numberScaleValue);
+  });
 
-  changeScale(numberScaleValue);
-});
+  btnSmaller.addEventListener('click', () => {
+    let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
+    numberScaleValue -= SCALE_STEP;
+    inputScale.value =  `${numberScaleValue}%`;
 
-btnSmaller.addEventListener('click', () => {
-  let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
-  numberScaleValue -= SCALE_STEP;
-  inputScale.value =  `${numberScaleValue}%`;
+    checkBtnAccess(numberScaleValue);
+    changeScale(numberScaleValue);
+  });
+};
 
-  btnBigger.disabled = false;
-  if (numberScaleValue === SCALE_MIN) {
-    btnSmaller.disabled = true;
-  }
+const destroyScaleEffect = () => {
+  btnBigger.removeEventListener('click', () => {
+    let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
+    numberScaleValue += SCALE_STEP;
+    inputScale.value =  `${numberScaleValue}%`;
 
-  changeScale(numberScaleValue);
-});
+    checkBtnAccess(numberScaleValue);
+    changeScale(numberScaleValue);
+  });
 
-export {btnBigger, btnSmaller};
+  btnSmaller.removeEventListener('click', () => {
+    let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
+    numberScaleValue -= SCALE_STEP;
+    inputScale.value =  `${numberScaleValue}%`;
+
+    checkBtnAccess(numberScaleValue);
+    changeScale(numberScaleValue);
+  });
+};
+
+
+export {initScaleEffect, destroyScaleEffect};

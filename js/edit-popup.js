@@ -1,9 +1,10 @@
-import { btnBigger, btnSmaller} from './effect-scale-photo.js';
+import {initScaleEffect, destroyScaleEffect} from'./effect-scale-photo.js';
 import {sliderBackground} from './effect-slider.js';
 
 const SCALE_VALUE = 100;
 const PERCENT = '%';
 const SCALE_MAX = 1;
+const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{0,19}$/i;
 
 const bodyElement = document.querySelector('body');
 const overlayElement=bodyElement.querySelector('.img-upload__overlay');
@@ -14,7 +15,6 @@ const imgPreview = form.querySelector('.img-upload__preview img');
 const uploadElement = document.getElementById('upload-file');
 const inputHashtags = document.querySelector('.text__hashtags');
 const uploadComment = document.querySelector('.text__description');
-const REG_HASHTAGS = /^#[a-zа-яё0-9]{0,19}$/i;
 const acceptedFiles = ['image/jpeg','image/png', 'image/jpg'];
 const scaleControl = document.querySelector('.scale__control--value');
 
@@ -43,7 +43,7 @@ const initValidation = () => {
     return value.length === new Set(lowercasedHashtags).size;
   };
 
-  const isHashtagValid = (value) => REG_HASHTAGS.test(value);
+  const isHashtagValid = (value) => HASHTAGS_REGEXP.test(value);
 
   const validateSameHashtags = (value) => isUniqueElements(normalizeHashtags(value));
 
@@ -113,8 +113,7 @@ function closeEditPopup () {
   imgPreview.style.filter = '';
   imgPreview.className = 'effects__preview--none';
   imgPreview.dataset.filterName = '';
-  btnBigger.disabled = true;
-  btnSmaller.disabled = false;
+  destroyScaleEffect();
 }
 
 const openEditPopup =() => {
@@ -123,6 +122,7 @@ const openEditPopup =() => {
   window.addEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.addEventListener('click', onCloseBtnClick);
   scaleControl.value = SCALE_VALUE + PERCENT;
+  initScaleEffect();
   sliderBackground.classList.add('hidden');
 };
 
