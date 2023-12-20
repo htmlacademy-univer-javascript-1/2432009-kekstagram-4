@@ -3,8 +3,6 @@ import {sliderBackground} from './effect-slider.js';
 import {onSuccess, onFail} from './form-submit.js';
 import { uploadData } from './api.js';
 
-const SCALE_VALUE = 100;
-const PERCENT = '%';
 const SCALE_MAX = 1;
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{0,19}$/i;
 
@@ -133,7 +131,7 @@ const openEditPopup =() => {
   window.addEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.addEventListener('click', onCloseBtnClick);
   form.addEventListener('submit', onFormUploadSubmit);
-  scaleControl.value = SCALE_VALUE + PERCENT;
+  scaleControl.value = '100%';
   initScaleEffect();
   sliderBackground.classList.add('hidden');
 };

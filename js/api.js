@@ -1,11 +1,11 @@
-const urls = {
+const URL = {
   GET: 'https://29.javascript.pages.academy/kekstagram/data',
   POST: 'https:/1/29.javascript.pages.academy/kekstagram',
 };
 
 const sendRequest = (onSuccess, onFail, method, body) =>{
   fetch (
-    urls[method],
+    URL[method],
     {
       method: method,
       body: body,
