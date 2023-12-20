@@ -1,5 +1,7 @@
 import {initScaleEffect, destroyScaleEffect} from'./effect-scale-photo.js';
 import {sliderBackground} from './effect-slider.js';
+import {onSuccess, onFail} from './form-submit.js';
+import { uploadData } from './api.js';
 
 const SCALE_VALUE = 100;
 const PERCENT = '%';
@@ -17,6 +19,13 @@ const inputHashtags = document.querySelector('.text__hashtags');
 const uploadComment = document.querySelector('.text__description');
 const acceptedFiles = ['image/jpeg','image/png', 'image/jpg'];
 const scaleControl = document.querySelector('.scale__control--value');
+const effects = document.querySelectorAll('.effects__preview');
+
+const onFormUploadSubmit = (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  uploadData(onSuccess, onFail, 'POST', formData);
+};
 
 const initValidation = () => {
   const pristine = new Pristine(
@@ -108,12 +117,14 @@ function closeEditPopup () {
   bodyElement.classList.remove('modal-open');
   window.removeEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.removeEventListener('click', onCloseBtnClick);
+  form.removeEventListener('submit', onFormUploadSubmit);
   uploadElement.value = '';
   imgPreview.style.transform = `scale(${SCALE_MAX})`;
   imgPreview.style.filter = '';
   imgPreview.className = 'effects__preview--none';
   imgPreview.dataset.filterName = '';
   destroyScaleEffect();
+  form.reset();
 }
 
 const openEditPopup =() => {
@@ -121,18 +132,34 @@ const openEditPopup =() => {
   bodyElement.classList.add('modal-open');
   window.addEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.addEventListener('click', onCloseBtnClick);
+  form.addEventListener('submit', onFormUploadSubmit);
   scaleControl.value = SCALE_VALUE + PERCENT;
   initScaleEffect();
   sliderBackground.classList.add('hidden');
+};
+
+const changeImages = () => {
+  const file = uploadElement.files[0];
+  const fileUrl = URL.createObjectURL(file);
+
+  imgPreview.src = fileUrl;
+
+  effects.forEach((effect) => {
+    effect.style.backgroundImage = `url('${fileUrl}')`;
+  });
 };
 
 const onInputUploadElementChange = () => {
   if (acceptedFiles.includes(uploadElement.files[0].type)) {
     openEditPopup();
     initValidation();
+    changeImages();
   }
 };
 
-export const initEditPopup = () => {
+const initEditPopup = () => {
   inputUploadElement.addEventListener('change',onInputUploadElementChange);
 };
+
+export {closeEditPopup,initEditPopup};
+
