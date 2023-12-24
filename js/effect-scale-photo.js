@@ -28,7 +28,6 @@ const initScaleEffect = () => {
     let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
     numberScaleValue += SCALE_STEP;
     inputScale.value =  `${numberScaleValue}%`;
-
     checkBtnAccess(numberScaleValue);
     changeScale(numberScaleValue);
   });
@@ -37,7 +36,6 @@ const initScaleEffect = () => {
     let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
     numberScaleValue -= SCALE_STEP;
     inputScale.value =  `${numberScaleValue}%`;
-
     checkBtnAccess(numberScaleValue);
     changeScale(numberScaleValue);
   });
@@ -48,7 +46,6 @@ const destroyScaleEffect = () => {
     let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
     numberScaleValue += SCALE_STEP;
     inputScale.value =  `${numberScaleValue}%`;
-
     checkBtnAccess(numberScaleValue);
     changeScale(numberScaleValue);
   });
@@ -57,11 +54,9 @@ const destroyScaleEffect = () => {
     let numberScaleValue = parseInt(inputScale.value.match(/\d+/), 10);
     numberScaleValue -= SCALE_STEP;
     inputScale.value =  `${numberScaleValue}%`;
-
     checkBtnAccess(numberScaleValue);
     changeScale(numberScaleValue);
   });
 };
-
 
 export {initScaleEffect, destroyScaleEffect};

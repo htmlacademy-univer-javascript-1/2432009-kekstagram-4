@@ -4,31 +4,25 @@ import { loadData } from './api.js';
 import './effect-slider.js';
 
 let pictures = [];
-
 const onSuccess = (data) => {
   pictures = data.slice();
   drawMiniatures(pictures);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-
 };
 
 const onFail = () =>{
-  const errorMesage = document.createElement('div');
-  errorMesage.style.position = 'absolute';
-  errorMesage.style.left = 0;
-  errorMesage.style.top = 0;
-  errorMesage.style.right = 0;
-
-  errorMesage.style.fontSize = '20px';
-  errorMesage.style.backgroundColor = '#e1375f';
-  errorMesage.style.padding = '15px';
-
-  errorMesage.style.textAlign = 'center';
-  errorMesage.textContent = 'Ошибка при загрузке изображений';
-  document.body.append(errorMesage);
-
+  const errorMessage = document.createElement('div');
+  errorMessage.style.position = 'absolute';
+  errorMessage.style.left = 0;
+  errorMessage.style.top = 0;
+  errorMessage.style.right = 0;
+  errorMessage.style.fontSize = '20px';
+  errorMessage.style.backgroundColor = '#e1375f';
+  errorMessage.style.padding = '15px';
+  errorMessage.style.textAlign = 'center';
+  errorMessage.textContent = 'Ошибка при загрузке изображений';
+  document.body.append(errorMessage);
 };
-
 
 loadData(onSuccess, onFail);
 initEditPopup();
