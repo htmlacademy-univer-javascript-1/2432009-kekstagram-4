@@ -95,6 +95,7 @@ inputEffectHeat.addEventListener('change', (evt) => {
     });
   }
 });
+
 inputEffectPhobos.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     updateForFobos();
@@ -105,6 +106,7 @@ inputEffectPhobos.addEventListener('change', (evt) => {
     });
   }
 });
+
 inputEffectMarvin.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     updateForMarvin();
@@ -115,6 +117,7 @@ inputEffectMarvin.addEventListener('change', (evt) => {
     });
   }
 });
+
 inputEffectSepia.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     updateForChromeSepia();
@@ -125,6 +128,7 @@ inputEffectSepia.addEventListener('change', (evt) => {
     });
   }
 });
+
 inputEffectChrome.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     updateForChromeSepia();
@@ -135,6 +139,7 @@ inputEffectChrome.addEventListener('change', (evt) => {
     });
   }
 });
+
 inputEffectNone.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     imgUploadPreview.setAttribute('style', `transform: scale(${inputScale.value})`);
@@ -143,4 +148,5 @@ inputEffectNone.addEventListener('change', (evt) => {
     sliderBackground.classList.add('hidden');
   }
 });
+
 export {sliderBackground};

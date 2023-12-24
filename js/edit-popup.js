@@ -5,19 +5,18 @@ import { uploadData } from './api.js';
 
 const SCALE_MAX = 1;
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{0,19}$/i;
-
 const bodyElement = document.querySelector('body');
 const overlayElement=bodyElement.querySelector('.img-upload__overlay');
 const inputUploadElement = bodyElement.querySelector('.img-upload__input');
 const closeEditPopupBtn = bodyElement.querySelector('.img-upload__cancel');
-const form = document.querySelector('.img-upload__form');
-const imgPreview = form.querySelector('.img-upload__preview img');
+const formElement = document.querySelector('.img-upload__form');
+const imgPreview = formElement.querySelector('.img-upload__preview img');
 const uploadElement = document.getElementById('upload-file');
 const inputHashtags = document.querySelector('.text__hashtags');
 const uploadComment = document.querySelector('.text__description');
 const acceptedFiles = ['image/jpeg','image/png', 'image/jpg'];
 const scaleControl = document.querySelector('.scale__control--value');
-const effects = document.querySelectorAll('.effects__preview');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 
 const onFormUploadSubmit = (evt) => {
   evt.preventDefault();
@@ -27,7 +26,7 @@ const onFormUploadSubmit = (evt) => {
 
 const initValidation = () => {
   const pristine = new Pristine(
-    form,
+    formElement,
     {
       classTo: 'img-upload__field-wrapper',
       errorClass: 'img-upload__field-wrapper--invalid',
@@ -42,11 +41,13 @@ const initValidation = () => {
 
   const normalizeHashtags = (value) => {
     const hashtags = value.split(' ');
+
     return hashtags.filter((element) => element !== '');
   };
 
   const isUniqueElements = (value) => {
     const lowercasedHashtags = value.map((element) => element.toLowerCase());
+
     return value.length === new Set(lowercasedHashtags).size;
   };
 
@@ -64,6 +65,7 @@ const initValidation = () => {
 
   const validateHashtagsCount = (value) => {
     const hashtagsArray = value.split('#');
+
     return hashtagsArray.length <= 6;
   };
 
@@ -91,10 +93,9 @@ const initValidation = () => {
     'Длина комментария до 140 символов'
   );
 
-  form.addEventListener('submit', (evt) => {
+  formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
-
     if (pristine.validate()) {
       evt.target.submit();
     }
@@ -115,14 +116,14 @@ function closeEditPopup () {
   bodyElement.classList.remove('modal-open');
   window.removeEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.removeEventListener('click', onCloseBtnClick);
-  form.removeEventListener('submit', onFormUploadSubmit);
+  formElement.removeEventListener('submit', onFormUploadSubmit);
   uploadElement.value = '';
   imgPreview.style.transform = `scale(${SCALE_MAX})`;
   imgPreview.style.filter = '';
   imgPreview.className = 'effects__preview--none';
   imgPreview.dataset.filterName = '';
   destroyScaleEffect();
-  form.reset();
+  formElement.reset();
 }
 
 const openEditPopup =() => {
@@ -130,7 +131,7 @@ const openEditPopup =() => {
   bodyElement.classList.add('modal-open');
   window.addEventListener('keydown',onDocumentKeydown);
   closeEditPopupBtn.addEventListener('click', onCloseBtnClick);
-  form.addEventListener('submit', onFormUploadSubmit);
+  formElement.addEventListener('submit', onFormUploadSubmit);
   scaleControl.value = '100%';
   initScaleEffect();
   sliderBackground.classList.add('hidden');
@@ -139,10 +140,8 @@ const openEditPopup =() => {
 const changeImages = () => {
   const file = uploadElement.files[0];
   const fileUrl = URL.createObjectURL(file);
-
   imgPreview.src = fileUrl;
-
-  effects.forEach((effect) => {
+  effectsPreview.forEach((effect) => {
     effect.style.backgroundImage = `url('${fileUrl}')`;
   });
 };
