@@ -69,8 +69,6 @@ export const openViewPopup = (url, description, likes, comments) =>{
   renderMoreComments();
 
   document.body.classList.add('modal-open');
-
   closeViewPopupBtn.addEventListener('click', onCloseBtnClick);
-
   loadCommentsBtn.addEventListener('click', onLoadCommentsBtn);
 };
